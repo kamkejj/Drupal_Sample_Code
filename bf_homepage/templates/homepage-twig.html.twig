@@ -1,0 +1,42 @@
+{#
+    Homepage template
+    Variables:
+        heroSection['image']
+        leftSection['image']
+        leftSection['title']
+        leftSection['blurb']
+
+        centerSection['image']
+        centerSection['title']
+        centerSection['blurb']
+
+        rightSection['image']
+        rightSection['title']
+        rightSection['blurb']
+#}
+<div class="homeCallout">
+    <div class="homeCallout_heroSection">
+        {{ heroSection['image'] }}
+    </div>
+    <div class="homeCallout_thumbSection">
+        <div class="homeCallout_thumbSection_block">
+            <div class="homeCallout_thumbSection_block_image">{{ leftSection['image'] }}</div>
+            <div class="homeCallout_thumbSection_block_title">{{ leftSection['title'] }}</div>
+            <div class="homeCallout_thumbSection_block_blurb"> {{ leftSection['blurb'] }}<span
+                        class="rightArrow"> > </span></div>
+        </div>
+
+        <div class="homeCallout_thumbSection_block">
+            <div class="homeCallout_thumbSection_block_image">{{ centerSection['image'] }}</div>
+            <div class="homeCallout_thumbSection_block_title">{{ centerSection['title'] }}</div>
+            <div class="homeCallout_thumbSection_block_blurb">{{ centerSection['blurb'] }}<span
+                        class="rightArrow"> > </span></div>
+        </div>
+        <div class="homeCallout_thumbSection_block">
+            <div class="homeCallout_thumbSection_block_image">{{ rightSection['image'] }}</div>
+            <div class="homeCallout_thumbSection_block_title">{{ rightSection['title'] }}</div>
+            <div class="homeCallout_thumbSection_block_blurb">{{ rightSection['blurb'] }}<span
+                        class="rightArrow"> > </span></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+bf_homepage.homepage_form:
+  title: 'Home Page Content'
+  route_name: bf_homepage.homepage_form
+  description: 'Display content from this module on the home page.'
+  parent: system.admin_config_system
+  weight: 99
+

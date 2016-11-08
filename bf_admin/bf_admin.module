@@ -1,0 +1,31 @@
+<?php
+/**
+ * @file
+ *
+ * @author Jon Kamke <jon@kamke.org>
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function bf_admin_menu() {
+  $items['admin/config/bfas'] = array(
+    'title' => 'BFAS',
+    'description' => 'Admin pages for BFAS items.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bf_admin_site_settings_form'),
+    'access arguments' => array('access administration pages'),
+    'file' => 'bfas.admin.settings.inc',
+  );
+
+  $items['admin/config/bfas/site-settings'] = array(
+    'title' => 'Site Settings',
+    'description' => 'Various settings for the site.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bf_admin_site_settings_form'),
+    'access arguments' => array('access administration pages'),
+    'file' => 'bfas.admin.settings.inc',
+  );
+
+  return $items;
+}

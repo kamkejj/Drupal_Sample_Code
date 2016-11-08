@@ -1,0 +1,6 @@
+core = "7.x"
+description = "A module for admin type pages and settings including custom forms, etc..."
+name = "BF Admin"
+package = Best Friends
+
+version = "7.x-1.0"

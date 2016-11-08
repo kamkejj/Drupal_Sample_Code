@@ -1,0 +1,5 @@
+name: bf_homepage
+type: module
+description: Home page content.
+core: 8.x
+package: Best Friends

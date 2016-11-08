@@ -1,0 +1,16 @@
+{
+  "name": "drupal/bf_homepage",
+  "type": "drupal-module",
+  "description": "Home page content.",
+  "keywords": [
+    "Drupal"
+  ],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/bf_homepage",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "http://drupal.org/project/issues/bf_homepage",
+    "source": "http://cgit.drupalcode.org/bf_homepage"
+  },
+  "require": {}
+}

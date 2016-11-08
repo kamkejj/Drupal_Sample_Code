@@ -1,0 +1,6 @@
+name = Rethink Recycling Toolkits Blocks
+description = Blocks of content for some pages.
+core = 7.x
+package = Rethink
+version = 7.x-1.0
+dependencies[] = rr_toolkits

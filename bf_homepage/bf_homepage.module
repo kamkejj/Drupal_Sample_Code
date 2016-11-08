@@ -1,0 +1,57 @@
+<?php
+/**
+ * @file
+ *
+ * @author Jon Kamke <jon@kamke.org>
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function bf_homepage_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the bf_homepage module.
+    case 'help.page.bf_homepage':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Home page content.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bf_homepage_theme($existing, $type, $theme, $path) {
+  return [
+    'homepage_twig' => [
+      'variables' => [
+        'heroSection' => [
+          'image' => NULL,
+        ],
+        'leftSection' => [
+          'image' => NULL,
+          'title' => NULL,
+          'blurb' => NULL,
+          'link' => NULL,
+        ],
+        'centerSection' => [
+          'image' => NULL,
+          'title' => NULL,
+          'blurb' => NULL,
+          'link' => NULL,
+        ],
+        'rightSection' => [
+          'image' => NULL,
+          'title' => NULL,
+          'blurb' => NULL,
+          'link' => NULL,
+        ],
+      ],
+    ],
+  ];
+}
