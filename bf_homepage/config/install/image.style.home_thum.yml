@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: home_thum
+label: 'Home Thumb'
+effects:
+  024dbda4-43d0-4559-8b04-9602d982da43:
+    uuid: 024dbda4-43d0-4559-8b04-9602d982da43
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 300
+      height: 300

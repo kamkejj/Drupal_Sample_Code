@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: home_hero
+label: 'Home Hero'
+effects:
+  097414c9-008b-44fd-8da0-d2d5cef86a83:
+    uuid: 097414c9-008b-44fd-8da0-d2d5cef86a83
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1000
+      height: 460

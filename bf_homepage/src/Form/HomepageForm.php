@@ -13,6 +13,9 @@ namespace Drupal\bf_homepage\Form;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\file\Entity\File;
+use Drupal\file\FileUsage\DatabaseFileUsageBackend;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use \Drupal\Core\Config\ConfigFactoryInterface;
 
 /**
  * Class HomepageForm.
@@ -20,6 +23,25 @@ use Drupal\file\Entity\File;
  * @package Drupal\bf_homepage\Form
  */
 class HomepageForm extends ConfigFormBase {
+
+  /**
+   * Drupal Service file.usage.
+   *
+   * @var \Drupal\file\FileUsage\DatabaseFileUsageBackend
+   */
+  protected $fileUsage;
+
+  /**
+   * HomepageForm constructor.
+   *
+   * @param ConfigFactoryInterface $config_factory
+   * @param DatabaseFileUsageBackend $fileUsage
+   */
+  public function __construct(ConfigFactoryInterface $config_factory, DatabaseFileUsageBackend $fileUsage) {
+    parent::__construct($config_factory);
+
+    $this->fileUsage = $fileUsage;
+  }
 
   /**
    * {@inheritdoc}
@@ -53,11 +75,11 @@ class HomepageForm extends ConfigFormBase {
       '#title' => t('Main Hero Image'),
       '#type' => 'managed_file',
       '#description' => t('Allowed image types: gif png jpg jpeg. Should be 1000x460 pixels.'),
-      '#default_value' => [$config->get('mainimage')],
-      '#upload_validators' => array(
-        'file_validate_extensions' => array('gif png jpg jpeg'),
-        'file_validate_size' => array(25600000),
-      ),
+      '#default_value' => !empty($config->get('mainimage')) ? [$config->get('mainimage')] : [],
+      '#upload_validators' => [
+        'file_validate_extensions' => ['gif png jpg jpeg'],
+        'file_validate_size' => [25600000],
+      ],
       '#upload_location' => 'public://homepage/main',
       '#required' => TRUE,
     ];
@@ -72,11 +94,11 @@ class HomepageForm extends ConfigFormBase {
       '#title' => t('Left Block Image'),
       '#type' => 'managed_file',
       '#description' => t('Allowed image types: gif png jpg jpeg. Should be 325px square.'),
-      '#default_value' => [$config->get('leftimage')],
-      '#upload_validators' => array(
-        'file_validate_extensions' => array('gif png jpg jpeg'),
-        'file_validate_size' => array(25600000),
-      ),
+      '#default_value' => !empty($config->get('leftimage')) ? [$config->get('leftimage')] : [],
+      '#upload_validators' => [
+        'file_validate_extensions' => ['gif png jpg jpeg'],
+        'file_validate_size' => [25600000],
+      ],
       '#upload_location' => 'public://homepage/left',
       '#required' => TRUE,
     ];
@@ -114,11 +136,11 @@ class HomepageForm extends ConfigFormBase {
       '#title' => t('Center Block Image'),
       '#type' => 'managed_file',
       '#description' => t('Allowed image types: gif png jpg jpeg. Should be 325px square.'),
-      '#default_value' => [$config->get('centerimage')],
-      '#upload_validators' => array(
-        'file_validate_extensions' => array('gif png jpg jpeg'),
-        'file_validate_size' => array(25600000),
-      ),
+      '#default_value' => !empty($config->get('centerimage')) ? [$config->get('centerimage')] : [],
+      '#upload_validators' => [
+        'file_validate_extensions' => ['gif png jpg jpeg'],
+        'file_validate_size' => [25600000],
+      ],
       '#upload_location' => 'public://homepage/center',
       '#required' => TRUE,
     ];
@@ -156,11 +178,11 @@ class HomepageForm extends ConfigFormBase {
       '#title' => t('Right Block Image'),
       '#type' => 'managed_file',
       '#description' => t('Allowed image types: gif png jpg jpeg. Should be 325px square.'),
-      '#default_value' => [$config->get('rightimage')],
-      '#upload_validators' => array(
-        'file_validate_extensions' => array('gif png jpg jpeg'),
-        'file_validate_size' => array(25600000),
-      ),
+      '#default_value' => !empty($config->get('rightimage')) ? [$config->get('rightimage')] : [],
+      '#upload_validators' => [
+        'file_validate_extensions' => ['gif png jpg jpeg'],
+        'file_validate_size' => [25600000],
+      ],
       '#upload_location' => 'public://homepage/right',
       '#required' => TRUE,
     ];
@@ -240,18 +262,29 @@ class HomepageForm extends ConfigFormBase {
    *
    * @param array $imageId
    */
-  private function saveImagePermanently(array $imageId) {
+  protected function saveImagePermanently(array $imageId) {
     if (empty($imageId)) {
       return;
     }
 
     $file = File::load($imageId[0]);
     if (gettype($file) == 'object') {
-      // Record the module (in this example, user module) is using the file.
-      \Drupal::service('file.usage')
-        ->add($file, 'bf_homepage', 'bf_homepage', 1);
+      // Record the module using the file.
+      $this->fileUsage->add($file, 'bf_homepage', 'bf_homepage', 1);
     }
 
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+
+    return new static(
+      $container->get('config.factory'),
+      $container->get('file.usage')
+
+    );
   }
 
 }

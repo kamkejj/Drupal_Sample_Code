@@ -13,6 +13,8 @@ namespace Drupal\bf_homepage\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\file\Entity\File;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Image\ImageFactory;
 
 /**
  * Class HomeController.
@@ -20,6 +22,24 @@ use Drupal\Core\Url;
  * @package Drupal\bf_homepage\Controller
  */
 class HomeController extends ControllerBase {
+
+  /**
+   * Drupal Service image.factory.
+   *
+   * @var ImageFactory
+   */
+  private $imageFactory;
+
+  /**
+   * HomeController constructor.
+   *
+   * @param ImageFactory $imageFactory
+   */
+  public function __construct(ImageFactory $imageFactory) {
+
+    $this->imageFactory = $imageFactory;
+  }
+
   /**
    * Home.
    *
@@ -29,7 +49,9 @@ class HomeController extends ControllerBase {
     $config = $this->config('bf_homepage.homepage');
 
     if (empty($config->get('mainimage'))) {
-      return;
+      return [
+        '#markup' => 'Add content at /admin/config/bf_homepage/homepage'
+      ];
     }
 
     $mainImageArray = $this->loadImage($config->get('mainimage'), 'home_hero');
@@ -116,4 +138,13 @@ class HomeController extends ControllerBase {
     return $render_array;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+
+    return new static(
+      $container->get('image.factory')
+    );
+  }
 }
